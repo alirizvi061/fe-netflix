@@ -4,6 +4,7 @@ import Row from "./Row"
 import './App.css';
 import requests from "./requests";
 import Banner from "./Banner";
+import Navbar from "./Navbar";
 
 function App() {
   // console.log(requests)
@@ -11,6 +12,7 @@ function App() {
     <div className="app">
 
     {/* NavBar */}
+    <Navbar />
     <Banner />
 
       <Row 
