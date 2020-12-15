@@ -32,15 +32,26 @@ function Row({title, fetchUrl, isLargeRow}) {
     }
 
     const handleClick = (movie) => {
-        // console.log(movie)
+        console.log(movie)
 
-        AXIOS.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&append_to_response=videos`)
-            .then((res)=>{
-                console.log(res.data.videos.results.map(video => console.log(video)))
-
-            })
-        
-
+        if (trailerUrl) {
+                setTrailerUrl("");
+                console.log(trailerUrl, "is empty")
+        } else {
+            AXIOS.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&append_to_response=videos`)
+                .then((res)=>{
+                    console.log(res)
+                    const trailer = res.data.videos.results
+                    // console.log(trailer.length)
+                    // console.log(trailer)
+                    if(trailer.length !== 0) {
+                        trailer.map(videos => {
+                            setTrailerUrl(videos.key)
+                        })
+                    }
+                }).catch(error => console.log(error))
+                
+        }
         // if (trailerUrl) {
         //     setTrailerUrl("");
         //     console.log(trailerUrl, "is empty")
@@ -55,6 +66,7 @@ function Row({title, fetchUrl, isLargeRow}) {
         // }
 
     }
+    console.log(trailerUrl, "this is final trailer url")
 
 
 
