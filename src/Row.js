@@ -32,18 +32,28 @@ function Row({title, fetchUrl, isLargeRow}) {
     }
 
     const handleClick = (movie) => {
-        console.log(movie)
 
+
+        if (trailerUrl) {
+            setTrailerUrl("");
+
+        } else {
+            movieTrailer(movie?.name || "")
+            .then(url => {
+
+                const urlParams = new URLSearchParams(new URL(url).search);
+                setTrailerUrl(urlParams.get('v'));
+
+            }).catch(error => console.log(error))
+        }
         if (trailerUrl) {
                 setTrailerUrl("");
                 console.log(trailerUrl, "is empty")
         } else {
             AXIOS.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&append_to_response=videos`)
                 .then((res)=>{
-                    console.log(res)
+
                     const trailer = res.data.videos.results
-                    // console.log(trailer.length)
-                    // console.log(trailer)
                     if(trailer.length !== 0) {
                         trailer.map(videos => {
                             setTrailerUrl(videos.key)
@@ -52,21 +62,9 @@ function Row({title, fetchUrl, isLargeRow}) {
                 }).catch(error => console.log(error))
                 
         }
-        // if (trailerUrl) {
-        //     setTrailerUrl("");
-        //     console.log(trailerUrl, "is empty")
-        // } else {
-        //     movieTrailer(movie?.name || "")
-        //     .then(url => {
-        //         console.log(url)
-        //         const urlParams = new URLSearchParams(new URL(url).search);
-        //         setTrailerUrl(urlParams.get('v'));
-        //         console.log(trailerUrl, "is full")
-        //     }).catch(error => console.log(error))
-        // }
+      
 
     }
-    console.log(trailerUrl, "this is final trailer url")
 
 
 
