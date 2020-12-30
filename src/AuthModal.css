@@ -1,0 +1,10 @@
+.signupModal {
+  position: absolute;
+  width: 436px;
+  top: 0px;
+  right: 0px;
+  margin: 38%;
+  background: beige;
+  height: 137px;
+  color: white;
+}
