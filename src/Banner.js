@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import axios from './axios'
 import requests from './requests'
-
+import "./Row.css"
 import './Banner.css'
 
-function Banner() {
+
+
+function Banner(props) {
     const [movie, setMovie] = useState([]);
+
 
     useEffect(() => {
         async function fetchData() {
-            const request = await axios.get(requests.fetchNetflixOriginals);
+            const request = await axios.get(requests.fetchTrending);
             setMovie(request.data.results[
                 Math.floor(Math.random() * request.data.results.length - 1)
             ]
@@ -42,18 +45,21 @@ function Banner() {
             <h1 className="banner__title">
                 {movie?.title || movie?.name || movie?.original_name}
             </h1>
-            {/* div > 2 buttons */}
+
             <div className="banner__buttons">
-                <button className="banner__button">Play</button>
+                <button className="banner__button" type="button" onClick = {() => props.handleClick(movie)} >Play</button>
                 <button className="banner__button">My List</button>
             </div>
-            {/* description */} 
+
             <h1 className="banner__description">
                 {truncate(movie?.overview, 150)}
             </h1>
             </div>
 
             <div className="banner--fadeBottom"/>
+
+
+
         </header>
     )
 }
