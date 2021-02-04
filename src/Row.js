@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import axios from "./axios"
+import AXIOS from "axios"
 import "./Row.css"
 import Youtube from "react-youtube"
 import movieTrailer from "movie-trailer"
+
+const API_KEY = "34bafb36b895e1cc03e6abd128816c70"
 
 const baseURL = "https://image.tmdb.org/t/p/original/"
 
@@ -29,20 +32,37 @@ function Row({title, fetchUrl, isLargeRow}) {
     }
 
     const handleClick = (movie) => {
-        console.log(movie)
+
 
         if (trailerUrl) {
             setTrailerUrl("");
-            console.log(trailerUrl, "is empty")
+
         } else {
             movieTrailer(movie?.name || "")
             .then(url => {
-                console.log(url)
+
                 const urlParams = new URLSearchParams(new URL(url).search);
                 setTrailerUrl(urlParams.get('v'));
-                console.log(trailerUrl, "is full")
+
             }).catch(error => console.log(error))
         }
+        if (trailerUrl) {
+                setTrailerUrl("");
+                console.log(trailerUrl, "is empty")
+        } else {
+            AXIOS.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&append_to_response=videos`)
+                .then((res)=>{
+
+                    const trailer = res.data.videos.results
+                    if(trailer.length !== 0) {
+                        trailer.map(videos => {
+                            setTrailerUrl(videos.key)
+                        })
+                    }
+                }).catch(error => console.log(error))
+                
+        }
+      
 
     }
 

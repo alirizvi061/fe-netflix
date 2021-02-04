@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import "./Navbar.css"
+import app from "./base"
 
-function Navbar() {
+import history from './history';
+
+
+function Navbar(loggedIn) {
 
     const [show, handleShow] = useState(false);
 
@@ -16,6 +20,14 @@ function Navbar() {
         }
     }, [])
 
+    const onClick = (() => {
+        {loggedIn?
+        history.push("/signup")
+        :
+        history.push("/login")
+        }
+    })
+
     return (
         <div className={`nav ${show && "nav__black"}`}>
             <img
@@ -23,13 +35,15 @@ function Navbar() {
             src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
             alt="Netflix Logo"            
             />
-
+            <button onClick={() => app.auth().signOut()}>Sign Out</button>
             <img
+            onClick={onClick}
             className="nav__avatar"
             src="https://pm1.narvii.com/6915/b750d3766167c6d41dfd8f55e45f72631d100409r1-320-320v2_hq.jpg"
             alt="Netflix avatar "            
             />
             
+
         </div>
     )
 }
