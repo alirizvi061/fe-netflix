@@ -21,6 +21,14 @@ function App() {
 const [trailerUrl, setTrailerUrl] = useState("")
 const [loggedIn, setLogin] = useState(false)
 
+console.log(loggedIn)
+
+const setUserLogin = () => {
+  setLogin(!loggedIn)
+  console.log('user now logged in')
+}
+
+
 const handleClick = (movie) => {
 
 
@@ -63,7 +71,7 @@ const opts = {
   }
 }
 
-  console.log(requests)
+  // console.log(requests)
   return (
     <AuthProvider>
     <Router>
@@ -85,12 +93,16 @@ const opts = {
 
         <Row title="Top Rated" fetchUrl={requests.fetchTopRated}/>
         <Row title="Action Movies" fetchUrl={requests.fetchActionMovies}/>
-        {/* <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies}/> */}
-        {/* <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies}/> */}
-        {/* <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies}/> */}
+        {/* <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies}/>
+        <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies}/>
+        <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies}/> */}
 
 
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" 
+        component={Login} 
+        setUserLogin={setUserLogin}
+        loggedIn={loggedIn}
+        />
 
         <Route exact path="/signup" component={SignUp} />
         

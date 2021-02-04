@@ -16,16 +16,27 @@ function Navbar(loggedIn) {
             } else handleShow(false);
         });
         return () => {
-            window.removeEventListener("scroll")
+            // window.removeEventListener("scroll")
         }
     }, [])
 
-    const onClick = (() => {
+    // const onClick = (() => {
+    //     {loggedIn?
+    //     history.push("/signup")
+    //     :
+    //     history.push("/login")
+    //     }
+    // })
+
+    const signingOut = (() => {
+        console.log('Clicked')
         {loggedIn?
         history.push("/signup")
-        :
-        history.push("/login")
+        : 
+        console.log('logged out')
+        history.push("/")
         }
+        app.auth().signOut()
     })
 
     return (
@@ -35,9 +46,9 @@ function Navbar(loggedIn) {
             src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
             alt="Netflix Logo"            
             />
-            <button onClick={() => app.auth().signOut()}>Sign Out</button>
+            {/* <button onClick={() => signingOut()}>Sign Out</button> */}
             <img
-            onClick={onClick}
+            // onClick={onClick}
             className="nav__avatar"
             src="https://pm1.narvii.com/6915/b750d3766167c6d41dfd8f55e45f72631d100409r1-320-320v2_hq.jpg"
             alt="Netflix avatar "            
